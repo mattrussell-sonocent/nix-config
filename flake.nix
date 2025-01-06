@@ -25,6 +25,7 @@
             comma
             cowsay
             eza
+            ffmpeg-full
             fzf
             htop
             httpie
