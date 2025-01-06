@@ -62,7 +62,27 @@
 
   programs.git = {
     enable = true;
-    userEmail = "matt.russell@glean.co";
+    userEmail = "matt.russell@qglean.co";
     userName = "Matt Russell";
+    aliases = {
+      ci = "commit";
+      co = "checkout";
+    };
   };
+
+  programs.zsh = {
+    enable = true;
+    shellAliases = {
+      b = "git checkout $(git branch | fzf)";
+      dc = "docker compose";
+      g = "git";
+      gd = "git diff";
+      gdc = "git diff --cached";
+      gs = "git status";
+      k = "kubectl";
+      ll = "exa --long --classify --git --header";
+      switch = "darwin-rebuild switch --flake ~/.config/nix-darwin";
+      t = "task";
+    };
+  }  ;
 }

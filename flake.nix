@@ -24,6 +24,8 @@
             bat
             comma
             cowsay
+            eza
+            fzf
             htop
             httpie
             nixfmt-rfc-style
