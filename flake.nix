@@ -39,6 +39,7 @@
             brews = [ ];
             casks = [
               "1password"
+              "disk-inventory-x"
               "firefox"
               "iterm2"
               "slack"
@@ -57,7 +58,7 @@
 
           system.defaults.dock.autohide = false;
           system.defaults.menuExtraClock.ShowSeconds = true;
-          
+
           # Used for backwards compatibility, please read the changelog before changing.
           # $ darwin-rebuild changelog
           system.stateVersion = 5;
