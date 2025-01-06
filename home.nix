@@ -62,7 +62,7 @@
 
   programs.git = {
     enable = true;
-    userEmail = "matt.russell@qglean.co";
+    userEmail = "matt.russell@glean.co";
     userName = "Matt Russell";
     aliases = {
       ci = "commit";
