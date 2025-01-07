@@ -21,13 +21,13 @@
         { pkgs, ... }:
         {
           environment.systemPackages = with pkgs; [
+            asdf-vm
             bat
             comma
             cowsay
             eza
             ffmpeg-full
             fzf
-            git
             htop
             httpie
             nixfmt-rfc-style
@@ -46,6 +46,7 @@
               "disk-inventory-x"
               "firefox"
               "iterm2"
+              "rectangle"
               "slack"
               "visual-studio-code"
             ];

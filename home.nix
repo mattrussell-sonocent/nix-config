@@ -52,6 +52,9 @@
 
   programs.git = {
     enable = true;
+    lfs = {
+      enable = true;
+    };
     userEmail = "matt.russell@glean.co";
     userName = "Matt Russell";
     aliases = {
@@ -80,8 +83,12 @@
       gs = "git status";
       k = "kubectl";
       ll = "exa --long --classify --git --header";
-      switch = "darwin-rebuild switch --flake ~/.config/nix-darwin";
+      sw = "darwin-rebuild switch --flake ~/.config/nix-darwin";
       t = "task";
     };
   };
+
+#   programs.ssh = {
+#     enable = true;
+#   };
 }
