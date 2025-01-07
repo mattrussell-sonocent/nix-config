@@ -27,6 +27,7 @@
             eza
             ffmpeg-full
             fzf
+            git
             htop
             httpie
             nixfmt-rfc-style

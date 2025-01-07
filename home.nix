@@ -62,6 +62,15 @@
 
   programs.zsh = {
     enable = true;
+    oh-my-zsh = {
+      enable = true;
+      plugins = [
+        "docker-compose"
+        "docker"
+        "git"
+      ];
+      theme = "jonathan";
+    };
     shellAliases = {
       b = "git checkout $(git branch | fzf)";
       dc = "docker compose";
