@@ -28,11 +28,13 @@
             eza
             ffmpeg-full
             fzf
+            gnupg
             htop
             httpie
             nixfmt-rfc-style
             ponysay
             ripgrep
+            watchman
             wget
           ];
 
@@ -44,6 +46,7 @@
             casks = [
               "1password"
               "disk-inventory-x"
+              "docker"
               "firefox"
               "iterm2"
               "rectangle"

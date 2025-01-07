@@ -44,7 +44,7 @@
   };
 
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    USE_GKE_GCLOUD_AUTH_PLUGIN = "True";
   };
 
   # Let Home Manager install and manage itself.
@@ -60,6 +60,15 @@
     aliases = {
       ci = "commit";
       co = "checkout";
+    };
+    extraConfig = {
+      push.autoSetupRemote = "true";
+
+      # Config suggested by 1Password when configuring Git Commit Signing:
+      user.signingkey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDrcDfItPC8Qd85Dydafu6mX28TKIpSlLp3EsnYUqS/XXCNqkFbEhkrMNJW6T7sj3loaGDuIGU3i4CLwX5A7p4XGe4g3t1lPJhnayNg3NS76rNmdsCma4SjFEmxUSJ+Xve9LNgmNiSIyHPDTN9JotmE07b2QaXWxfg1TlS68I4daM33Ha6P43kVFzKMda6XnNnWPNdd6ADsX6v0jZELW/SVui74LoVDYgGmYQX2pfZq0vnsvqJBC2ze7KgtvA3rG1ff2+DlnoX0zE5E986q0GKgzoyV9DZ/aVMgxzSl5W1Zmn3mSe0+0GPhf1U0bZmkfHxuonWqbSkqkfru+si9x4gy33sR28tBQvg4OHEEcYFlezVh/A6vRmkZNDYuao0uuVEX3J5iffh/nN1puSxL8wWiRmbiHjsu8G+vD4Pgi0Xl/X61ikXN0AksJsCGopOpZUYuztK5Mip9DiS8DFtYGuZ/dQDRVX7G8p5I1R1wXpKtS8UCPsWUk+5CPTJ3fJFzSds=";
+      gpg.format = "ssh";
+      gpg."ssh".program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
+      commit.gpgsign = "true";
     };
   };
 
@@ -86,6 +95,13 @@
       sw = "darwin-rebuild switch --flake ~/.config/nix-darwin";
       t = "task";
     };
+    initExtra = ''
+      . "${pkgs.asdf-vm}/share/asdf-vm/asdf.sh"
+      . "${pkgs.asdf-vm}/share/asdf-vm/completions/asdf.bash"
+      if [[ -f ~/.asdf/plugins/java/set-java-home.zsh ]]; then
+        source ~/.asdf/plugins/java/set-java-home.zsh
+      fi
+    '';
   };
 
 #   programs.ssh = {
