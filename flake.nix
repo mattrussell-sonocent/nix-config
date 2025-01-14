@@ -25,12 +25,15 @@
             bat
             comma
             cowsay
+            direnv
             eza
+            fd
             ffmpeg-full
             fzf
             gnupg
             htop
             httpie
+            kubectx
             nixfmt-rfc-style
             ponysay
             ripgrep
@@ -42,9 +45,13 @@
             enable = true;
             # onActivation.cleanup = "uninstall";
             taps = [ ];
-            brews = [ ];
+            brews = [ 
+              "pyenv"
+              "pyenv-virtualenv"
+            ];
             casks = [
               "1password"
+              "discord"
               "disk-inventory-x"
               "docker"
               "firefox"
@@ -66,7 +73,8 @@
 
           system.defaults.dock.autohide = false;
           system.defaults.menuExtraClock.ShowSeconds = true;
-
+          system.defaults.controlcenter.Bluetooth = true;
+          
           # Used for backwards compatibility, please read the changelog before changing.
           # $ darwin-rebuild changelog
           system.stateVersion = 5;
@@ -75,6 +83,8 @@
           nixpkgs.hostPlatform = "aarch64-darwin";
 
           security.pam.enableSudoTouchIdAuth = true;
+
+          nixpkgs.config.allowUnfree = true;
 
           nix.extraOptions = ''
             extra-platforms = x86_64-darwin aarch64-darwin
