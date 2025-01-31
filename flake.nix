@@ -23,40 +23,59 @@
           environment.systemPackages = with pkgs; [
             asdf-vm
             bat
+            colima
             comma
             cowsay
             direnv
+            docker
+            dtrx
             eza
             fd
             ffmpeg-full
             fzf
+            gh
             gnupg
             htop
             httpie
+            lazydocker
+            lazygit
             kubectx
+            ngrok
             nixfmt-rfc-style
             ponysay
             ripgrep
+            unixtools.watch
             watchman
             wget
+            yt-dlp
           ];
 
           homebrew = {
             enable = true;
-            # onActivation.cleanup = "uninstall";
+            global = {
+              autoUpdate = false;
+            };
+            onActivation = {
+              cleanup = "uninstall";
+              upgrade = false;
+            };
             taps = [ ];
             brews = [ 
+              "tfenv"
               "pyenv"
               "pyenv-virtualenv"
             ];
             casks = [
               "1password"
+              "anki"
+              "bruno"
               "discord"
               "disk-inventory-x"
-              "docker"
               "firefox"
               "iterm2"
+              "microsoft-edge"
               "rectangle"
+              "skype"
               "slack"
               "visual-studio-code"
             ];
@@ -74,7 +93,7 @@
           system.defaults.dock.autohide = false;
           system.defaults.menuExtraClock.ShowSeconds = true;
           system.defaults.controlcenter.Bluetooth = true;
-          
+
           # Used for backwards compatibility, please read the changelog before changing.
           # $ darwin-rebuild changelog
           system.stateVersion = 5;
@@ -93,6 +112,18 @@
           system.defaults.NSGlobalDomain."com.apple.swipescrolldirection" = false;
           system.defaults.NSGlobalDomain."com.apple.keyboard.fnState" = true;
           #system.defaults.NSGlobalDomain.AppleShowAllExtensions = true;
+
+          # system.defaults.CustomUserPreferences = {
+          #   NSGlobalDomain = {
+          #     # Add a context menu item for showing the Web Inspector in web views
+          #     WebKitDeveloperExtras = true;
+          #   };            
+          #   "com.apple.Safari" = {
+          #     IncludeDevelopMenu = true;
+          #     WebKitDeveloperExtrasEnabledPreferenceKey = true;
+          #     "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" = true;
+          #   };
+          # };
 
           users.users.matt = {
             name = "matt";
