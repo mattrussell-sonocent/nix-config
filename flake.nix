@@ -59,11 +59,14 @@
               cleanup = "uninstall";
               upgrade = false;
             };
-            taps = [ ];
+            taps = [
+              "unisonweb/unison"
+            ];
             brews = [ 
-              "tfenv"
               "pyenv"
               "pyenv-virtualenv"
+              "tfenv"
+              "unison-language"
             ];
             casks = [
               "1password"
@@ -74,6 +77,7 @@
               "firefox"
               "iterm2"
               "microsoft-edge"
+              "obs"
               "rectangle"
               "skype"
               "slack"
