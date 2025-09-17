@@ -44,6 +44,7 @@
             nixfmt-rfc-style
             ponysay
             ripgrep
+            sd
             unixtools.watch
             watchman
             wget
@@ -82,6 +83,7 @@
               "skype"
               "slack"
               "visual-studio-code"
+              "vlc"
             ];
           };
 

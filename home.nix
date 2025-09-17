@@ -47,6 +47,10 @@
     USE_GKE_GCLOUD_AUTH_PLUGIN = "True";
   };
 
+  home.sessionPath = [
+    "$HOME/.local/bin"
+  ];
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -69,6 +73,7 @@
       gpg.format = "ssh";
       gpg."ssh".program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
       commit.gpgsign = "true";
+      init.defaultBranch = "main";
     };
   };
 
