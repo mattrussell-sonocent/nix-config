@@ -59,9 +59,7 @@
               cleanup = "uninstall";
               upgrade = false;
             };
-            taps = [
-              "unisonweb/unison"
-            ];
+            taps = [ ];
             brews = [
               "pyenv"
               "pyenv-virtualenv"

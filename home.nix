@@ -101,7 +101,7 @@
       gs = "git status";
       k = "kubectl";
       ll = "exa --long --classify --git --header";
-      sw = "darwin-rebuild switch --flake ~/.config/nix-darwin";
+      sw = "sudo darwin-rebuild switch --flake ~/.config/nix-darwin";
       t = "task";
     };
     initContent = ''
