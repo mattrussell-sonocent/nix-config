@@ -59,13 +59,13 @@
     lfs = {
       enable = true;
     };
-    userEmail = "matt.russell@glean.co";
-    userName = "Matt Russell";
-    aliases = {
-      ci = "commit";
-      co = "checkout";
-    };
-    extraConfig = {
+    settings = {
+      user.email = "matt.russell@glean.co";
+      user.name = "Matt Russell";
+      alias = {
+        ci = "commit";
+        co = "checkout";
+      };
       push.autoSetupRemote = "true";
       pull.rebase = "false"; # merge on pull
       # Config suggested by 1Password when configuring Git Commit Signing:
@@ -104,7 +104,7 @@
       sw = "darwin-rebuild switch --flake ~/.config/nix-darwin";
       t = "task";
     };
-    initExtra = ''
+    initContent = ''
       export PYENV_ROOT="$HOME/.pyenv"
       [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
       eval "$(pyenv init -)"

@@ -40,7 +40,7 @@
             lazygit
             kubectx
             ngrok
-            nixfmt-rfc-style
+            nixfmt
             ponysay
             ripgrep
             sd
