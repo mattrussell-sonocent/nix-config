@@ -62,11 +62,10 @@
             taps = [
               "unisonweb/unison"
             ];
-            brews = [ 
+            brews = [
               "pyenv"
               "pyenv-virtualenv"
               "tfenv"
-              "unison-language"
             ];
             casks = [
               "1password"
@@ -79,7 +78,6 @@
               "microsoft-edge"
               "obs"
               "rectangle"
-              "skype"
               "slack"
               "visual-studio-code"
               "vlc"
