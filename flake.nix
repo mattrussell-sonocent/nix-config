@@ -21,7 +21,6 @@
         { pkgs, ... }:
         {
           environment.systemPackages = with pkgs; [
-            asdf-vm
             bat
             colima
             comma
@@ -104,10 +103,12 @@
           # $ darwin-rebuild changelog
           system.stateVersion = 5;
 
+          system.primaryUser = "matt";
+
           # The platform the configuration will be used on.
           nixpkgs.hostPlatform = "aarch64-darwin";
 
-          security.pam.enableSudoTouchIdAuth = true;
+          security.pam.services.sudo_local.touchIdAuth = true;
 
           nixpkgs.config.allowUnfree = true;
 
@@ -145,6 +146,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "hm-backup";
             home-manager.users.matt = import ./home.nix;
           }
         ];

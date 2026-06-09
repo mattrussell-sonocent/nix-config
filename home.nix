@@ -88,6 +88,10 @@
       ];
       theme = "jonathan";
     };
+    profileExtra = ''
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+      source ~/.orbstack/shell/init.zsh 2>/dev/null || :
+    '';
     shellAliases = {
       b = "git checkout $(git branch | fzf)";
       dc = "docker compose";
@@ -101,16 +105,14 @@
       t = "task";
     };
     initExtra = ''
-      . "${pkgs.asdf-vm}/share/asdf-vm/asdf.sh"
-      . "${pkgs.asdf-vm}/share/asdf-vm/completions/asdf.bash"
-      if [[ -f ~/.asdf/plugins/java/set-java-home.zsh ]]; then
-        source ~/.asdf/plugins/java/set-java-home.zsh
-      fi
       export PYENV_ROOT="$HOME/.pyenv"
       [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
       eval "$(pyenv init -)"
       eval "$(pyenv virtualenv-init -)"
       eval "$(direnv hook zsh)"
+      if [[ -f ~/.safe-chain/scripts/init-posix.sh ]]; then
+        source ~/.safe-chain/scripts/init-posix.sh
+      fi
     '';
   };
 
