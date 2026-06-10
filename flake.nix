@@ -112,6 +112,22 @@
             extra-platforms = x86_64-darwin aarch64-darwin
           '';
 
+          # Weekly GC (Sun 03:00), dropping generations older than 30 days.
+          nix.gc = {
+            automatic = true;
+            interval = {
+              Weekday = 0;
+              Hour = 3;
+              Minute = 0;
+            };
+            options = "--delete-older-than 30d";
+          };
+
+          # Safety net: auto-GC mid-build when free space drops below 10 GiB,
+          # freeing up to 50 GiB per pass.
+          nix.settings.min-free = 10 * 1024 * 1024 * 1024;
+          nix.settings.max-free = 50 * 1024 * 1024 * 1024;
+
           system.defaults.NSGlobalDomain."com.apple.swipescrolldirection" = false;
           system.defaults.NSGlobalDomain."com.apple.keyboard.fnState" = true;
           #system.defaults.NSGlobalDomain.AppleShowAllExtensions = true;
