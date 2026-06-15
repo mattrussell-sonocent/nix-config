@@ -7,6 +7,7 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
   };
 
   outputs =
@@ -15,6 +16,7 @@
       home-manager,
       nix-darwin,
       nixpkgs,
+      determinate,
     }:
     let
       configuration =
@@ -82,11 +84,9 @@
             ];
           };
 
-          # Suppresses a bunch of warnings: https://github.com/LnL7/nix-darwin/issues/145#issuecomment-2499223123
-          nix.channel.enable = false;
-
-          # Necessary for using flakes on this system.
-          nix.settings.experimental-features = "nix-command flakes";
+          # Determinate Nix owns Nix (binary, daemon, /etc/nix/nix.conf, GC).
+          # Force-disables nix-darwin's own Nix management.
+          determinateNix.enable = true;
 
           # Set Git commit hash for darwin-version.
           system.configurationRevision = self.rev or self.dirtyRev or null;
@@ -107,26 +107,6 @@
           security.pam.services.sudo_local.touchIdAuth = true;
 
           nixpkgs.config.allowUnfree = true;
-
-          nix.extraOptions = ''
-            extra-platforms = x86_64-darwin aarch64-darwin
-          '';
-
-          # Weekly GC (Sun 03:00), dropping generations older than 30 days.
-          nix.gc = {
-            automatic = true;
-            interval = {
-              Weekday = 0;
-              Hour = 3;
-              Minute = 0;
-            };
-            options = "--delete-older-than 30d";
-          };
-
-          # Safety net: auto-GC mid-build when free space drops below 10 GiB,
-          # freeing up to 50 GiB per pass.
-          nix.settings.min-free = 10 * 1024 * 1024 * 1024;
-          nix.settings.max-free = 50 * 1024 * 1024 * 1024;
 
           system.defaults.NSGlobalDomain."com.apple.swipescrolldirection" = false;
           system.defaults.NSGlobalDomain."com.apple.keyboard.fnState" = true;
@@ -153,6 +133,7 @@
     {
       darwinConfigurations."Matts-MacBook-Pro" = nix-darwin.lib.darwinSystem {
         modules = [
+          inputs.determinate.darwinModules.default
           configuration
           home-manager.darwinModules.home-manager
           {
