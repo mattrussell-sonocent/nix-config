@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   # This value determines the Home Manager release that your configuration is
@@ -15,6 +15,8 @@
   home.packages = [
     pkgs.hello
     pkgs.ncdu
+    pkgs.taskwarrior3
+    inputs.claude-commander.packages.${pkgs.stdenv.hostPlatform.system}.default
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -104,10 +106,13 @@
       ll = "exa --long --classify --git --header";
       sw = "sudo darwin-rebuild switch --flake ~/.config/nix-darwin";
       t = "task";
+      tw = "${pkgs.taskwarrior3}/bin/task";
     };
     initContent = ''
       export PYENV_ROOT="$HOME/.pyenv"
       [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+      [[ -d $HOME/Library/Android/sdk/emulator ]] && export PATH="$HOME/Library/Android/sdk/emulator:$PATH"
+      [[ -d $HOME/Library/Android/sdk/platform-tools ]] && export PATH="$HOME/Library/Android/sdk/platform-tools:$PATH"
       eval "$(pyenv init -)"
       eval "$(pyenv virtualenv-init -)"
       eval "$(direnv hook zsh)"

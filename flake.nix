@@ -8,6 +8,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
+    claude-commander.url = "github:sizeak/claude-commander/v0.16.0";
   };
 
   outputs =
@@ -17,6 +18,7 @@
       nix-darwin,
       nixpkgs,
       determinate,
+      claude-commander,
     }:
     let
       configuration =
@@ -79,6 +81,7 @@
               "obs"
               "rectangle"
               "slack"
+              "stellarium"
               "visual-studio-code"
               "vlc"
             ];
@@ -140,6 +143,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "hm-backup";
+            home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.matt = import ./home.nix;
           }
         ];
