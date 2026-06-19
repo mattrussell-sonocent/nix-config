@@ -77,6 +77,7 @@
               "disk-inventory-x"
               "firefox"
               "iterm2"
+              "libreoffice"
               "microsoft-edge"
               "obs"
               "rectangle"
