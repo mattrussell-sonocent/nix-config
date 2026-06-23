@@ -7,16 +7,16 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1781622368,
-        "narHash": "sha256-DowYuGIsTo3cREx/T6yhMcH5KOuZN9AD+m2NtdUBDP0=",
+        "lastModified": 1782164124,
+        "narHash": "sha256-JWwCHZT7sJCIP59FeiYvfmBG4/gl9xtPvesxs/e31kM=",
         "owner": "sizeak",
         "repo": "claude-commander",
-        "rev": "0d07c6b46f7e66035f2bc5ba8563cae9f3421abd",
+        "rev": "a5e8af33fd9ea109f87c9cd113aef98450661bde",
         "type": "github"
       },
       "original": {
         "owner": "sizeak",
-        "ref": "v0.16.0",
+        "ref": "v0.18.1",
         "repo": "claude-commander",
         "type": "github"
       }

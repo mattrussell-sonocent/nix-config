@@ -8,7 +8,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
-    claude-commander.url = "github:sizeak/claude-commander/v0.16.0";
+    claude-commander.url = "github:sizeak/claude-commander/v0.18.1";
   };
 
   outputs =
