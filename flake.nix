@@ -8,7 +8,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
-    claude-commander.url = "github:sizeak/claude-commander/v0.18.1";
+    claude-commander.url = "github:sizeak/claude-commander/v0.38.0";
   };
 
   outputs =
@@ -73,6 +73,7 @@
               "1password"
               "anki"
               "bruno"
+              "codex"
               "discord"
               "disk-inventory-x"
               "firefox"
@@ -82,6 +83,7 @@
               "obs"
               "rectangle"
               "slack"
+              "stats"
               "stellarium"
               "visual-studio-code"
               "vlc"
@@ -91,6 +93,17 @@
           # Determinate Nix owns Nix (binary, daemon, /etc/nix/nix.conf, GC).
           # Force-disables nix-darwin's own Nix management.
           determinateNix.enable = true;
+
+          # Written to /etc/nix/nix.custom.conf (nix.settings is a no-op here).
+          # Use the extra- forms so the default substituters and keys
+          # (including cache.nixos.org's built-in key) are kept.
+          determinateNix.customSettings = {
+            # Pre-built Terraform for the learn-terraform repo's flake.
+            extra-substituters = [ "https://nixpkgs-terraform.cachix.org" ];
+            extra-trusted-public-keys = [
+              "nixpkgs-terraform.cachix.org-1:8Sit092rIdAVENA3ZVeH9hzSiqI/jng6JiCrQ1Dmusw="
+            ];
+          };
 
           # Set Git commit hash for darwin-version.
           system.configurationRevision = self.rev or self.dirtyRev or null;

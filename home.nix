@@ -16,6 +16,7 @@
     pkgs.hello
     pkgs.ncdu
     pkgs.taskwarrior3
+    pkgs.taskwarrior-tui
     inputs.claude-commander.packages.${pkgs.stdenv.hostPlatform.system}.default
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -63,7 +64,7 @@
       enable = true;
     };
     settings = {
-      user.email = "matt.russell@glean.co";
+      user.email = "matt.russell@genio.co";
       user.name = "Matt Russell";
       alias = {
         ci = "commit";
