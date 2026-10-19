@@ -1,6 +1,8 @@
 { config, pkgs, inputs, ... }:
 
 {
+  imports = [ ./opencode.nix ];
+
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.
@@ -57,6 +59,17 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  # Local LLMs: installs ollama and runs `ollama serve` as a launchd agent
+  # (http://127.0.0.1:11434). Models live in ~/.ollama, pulled by hand.
+  services.ollama = {
+    enable = true;
+    environmentVariables = {
+      OLLAMA_CONTEXT_LENGTH = "65536"; # agents need room for whole files
+      OLLAMA_FLASH_ATTENTION = "1"; # faster attention; needed for KV cache quantisation
+      # OLLAMA_KV_CACHE_TYPE = "q8_0"; # halves context memory; enable for 128K+ contexts
+    };
+  };
 
   programs.git = {
     enable = true;
