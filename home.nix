@@ -60,14 +60,23 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  # Local LLMs: installs ollama and runs `ollama serve` as a launchd agent
-  # (http://127.0.0.1:11434). Models live in ~/.ollama, pulled by hand.
-  services.ollama = {
+  # Local LLMs: runs Homebrew's ollama (installed by the `homebrew` block in
+  # flake.nix, since nixpkgs' build has no MLX) as `ollama serve` in a launchd
+  # agent (http://127.0.0.1:11434). Models live in ~/.ollama, pulled by hand.
+  launchd.agents.ollama = {
     enable = true;
-    environmentVariables = {
-      OLLAMA_CONTEXT_LENGTH = "65536"; # agents need room for whole files
-      OLLAMA_FLASH_ATTENTION = "1"; # faster attention; needed for KV cache quantisation
-      # OLLAMA_KV_CACHE_TYPE = "q8_0"; # halves context memory; enable for 128K+ contexts
+    config = {
+      ProgramArguments = [ "/opt/homebrew/opt/ollama/bin/ollama" "serve" ];
+      EnvironmentVariables = {
+        OLLAMA_HOST = "127.0.0.1:11434";
+        OLLAMA_CONTEXT_LENGTH = "65536"; # agents need room for whole files
+        OLLAMA_FLASH_ATTENTION = "1"; # faster attention; needed for KV cache quantisation
+        # OLLAMA_KV_CACHE_TYPE = "q8_0"; # halves context memory; enable for 128K+ contexts
+      };
+      RunAtLoad = true;
+      KeepAlive = true; # also retries until Homebrew has installed it
+      StandardOutPath = "${config.home.homeDirectory}/Library/Logs/ollama.log";
+      StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/ollama.log";
     };
   };
 
@@ -111,6 +120,7 @@
     '';
     shellAliases = {
       b = "git checkout $(git branch | fzf)";
+      claude-personal = "CLAUDE_CONFIG_DIR=$HOME/.claude-personal claude";
       dc = "docker compose";
       g = "git";
       gd = "git diff";

@@ -65,6 +65,9 @@
             };
             taps = [ ];
             brews = [
+              # Homebrew's build has MLX (nixpkgs' doesn't), which newer models
+              # such as qwen3.8 need; run by the launchd agent in home.nix.
+              "ollama"
               "pyenv"
               "pyenv-virtualenv"
               "tfenv"
@@ -77,6 +80,7 @@
               "discord"
               "disk-inventory-x"
               "firefox"
+              "google-drive"
               "iterm2"
               "libreoffice"
               "microsoft-edge"

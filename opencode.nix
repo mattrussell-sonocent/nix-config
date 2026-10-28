@@ -9,12 +9,15 @@
 let
   config = {
     "$schema" = "https://opencode.ai/config.json";
-    model = "ollama/qwen3-coder:30b";
+    # OpenCode Go (subscription; log in with `opencode console login`). GLM
+    # is the fallback: --model opencode-go/glm-5.3-flash.
+    model = "opencode-go/deepseek-v4.1-flash";
     provider.ollama = {
       npm = "@ai-sdk/openai-compatible";
       name = "Ollama (local)";
       options.baseURL = "http://127.0.0.1:11434/v1";
-      models."qwen3-coder:30b".name = "Qwen3 Coder 30B";
+      # Local fallback (slow, ~10 tok/s). Pick with --model ollama/qwen3.8:27b.
+      models."qwen3.8:27b".name = "Qwen3.8 27B";
     };
     # Never upload sessions; updates come from Nix.
     share = "disabled";
@@ -56,33 +59,39 @@ let
   };
 
   # The `worker` agent, for unattended runs that Claude orchestrates
-  # (`opencode run --agent worker "<task>"` in a scratch clone): edits are
-  # allowed, and only an explicit list of commands; everything else is denied,
-  # since nobody is there to answer a prompt. It doesn't commit; Claude reviews
-  # the diff and brings the change in.
+  # (`opencode run --agent worker "<task>"` in a scratch clone): commands are
+  # allowed by default, so it can get on with ordinary work (sed, node, the
+  # web scripts, reading the Rust or Nix sources), with a deny list for
+  # anything that reaches outside the clone or rewrites history. The clone
+  # has no remotes and the wrapper below hides GitHub and SSH credentials.
+  # (Nix writes these keys in sorted order, so "*" comes first and the more
+  # specific rules after it win.) It doesn't commit; Claude reviews the diff
+  # and brings the change in.
   config.agent.worker = {
     description = "Unattended worker for tasks Claude hands over, in a scratch clone";
     mode = "primary";
     permission = {
       edit = "allow";
       webfetch = "deny";
+      external_directory = "allow";
       bash = {
-        "*" = "deny";
-        "ls *" = "allow";
-        "cat *" = "allow";
-        "head *" = "allow";
-        "tail *" = "allow";
-        "wc *" = "allow";
-        "grep *" = "allow";
-        "rg *" = "allow";
-        "git status*" = "allow";
-        "git diff*" = "allow";
-        "git log*" = "allow";
-        "git show*" = "allow";
-        "nix develop -c cargo build*" = "allow";
-        "nix develop -c cargo test*" = "allow";
-        "nix develop -c cargo fmt*" = "allow";
-        "./target/release/stitchwort *" = "allow";
+        "*" = "allow";
+        "git push*" = "deny";
+        "git remote*" = "deny";
+        "git commit*" = "deny";
+        "git reset*" = "deny";
+        "git rebase*" = "deny";
+        "git filter-branch*" = "deny";
+        "gh *" = "deny";
+        "ssh *" = "deny";
+        "scp *" = "deny";
+        "curl *" = "deny";
+        "wget *" = "deny";
+        "sudo *" = "deny";
+        "rm -rf /*" = "deny";
+        "rm -rf ~*" = "deny";
+        "darwin-rebuild*" = "deny";
+        "opencode*" = "deny";
       };
     };
   };
